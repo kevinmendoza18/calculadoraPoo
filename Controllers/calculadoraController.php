@@ -2,13 +2,13 @@
 
 require_once '../Models/calculadoraModel.php';
 
+$calculadora = new calculadoraController;
+
 class calculadoraController
 {
-
-
     public function __construct()
     {
-        switch ($GET = "C") {
+        switch ($_REQUEST['c']) {
             case '1':
                 self::store();
                 break;
@@ -21,13 +21,20 @@ class calculadoraController
 
     public function store()
     {
+        $datos = [
+            'n1' => $_REQUEST['n1'],
+            'n2' => $_REQUEST['n2'],
+            'operacion' => $_REQUEST['operacion'],
+        ];
 
-        $n1 = $_REQUEST['n1'];
-        $n2 = $_REQUEST['n2'];
-        $operacion = $_REQUEST['operacion'];
+        $calculadora = new CalculadoraModel();
+        $result = $calculadora->store($datos);
 
-        $modelo = new CalculadoraModel($n1, $n2, $operacion);
+        if ($result) {
+            echo 'Se ha agregado la nueva operación';
+        }
 
-        $modelo->store();
+        
+        return $result;
     }
 }

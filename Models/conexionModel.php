@@ -1,5 +1,5 @@
 <?php
-
+require_once '../config/config.php';
 class Database
 {
     private $host;
@@ -7,13 +7,13 @@ class Database
     private $user;
     private $password;
     private $charset;
-
+ 
     public function __construct()
     {
-        $this->host     = constant('localhost');
-        $this->db       = constant('db_calculadora');
-        $this->user     = constant('root');
-        $this->password = constant('root');
+        $this->host     = constant('HOST');
+        $this->db       = constant('DB');
+        $this->user     = constant('USER');
+        $this->password = constant('PASSWORD');
         $this->charset  = constant('CHARSET');
     }
 
@@ -26,7 +26,6 @@ class Database
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
 
-            echo "conexion exitosa";
             $pdo = new PDO($con, $this->user, $this->password, $opt);
 
             return $pdo;

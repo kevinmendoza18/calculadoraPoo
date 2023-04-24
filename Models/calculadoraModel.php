@@ -7,28 +7,28 @@ class CalculadoraModel
     public $n1;
     public $n2;
     public $operacion;
+    private $db;
 
-    public function __construct($n1, $n2, $operacion)
+    public function __construct()
     {
-        $this->n1 = $n1;
-        $this->n2 = $n2;
-        $this->operacion = $operacion;
+        $this->db = new Database();
     }
 
-    public function RealizarOperacion()
+    public function RealizarOperacion($datos)
     {
-        switch ($this->operacion) {
+
+        switch ($datos['operacion']) {
             case '1':
-                return $this->n1 + $this->n2;
+                return $datos['n1'] + $datos['n2'];
                 break;
             case '2':
-                return $this->n1 - $this->n2;
+                return $datos['n1'] - $datos['n2'];
                 break;
             case '3':
-                return $this->n1 * $this->n2;
+                return $datos['n1'] * $datos['n2'];
                 break;
             case '4':
-                return $this->n1 / $this->n2;
+                return $datos['n1'] / $datos['n2'];
                 break;
             default:
                 return false;
@@ -36,26 +36,30 @@ class CalculadoraModel
         }
     }
 
-    public function store()
+    public function store($datos)
     {
-        $resultado = self::RealizarOperacion();
+        $resultado = self::RealizarOperacion($datos);
+
+
+
         try {
-            $sql = 'INSERT INTO operaciones(n1,n2,operaciones ) VALUES(:n1, :n2, :operaciones)';
+            $sql = 'INSERT INTO operaciones(n1,n2,operacion, resultado ) VALUES(:n1, :n2, :operacion, :resultado)';
 
             $prepare = $this->db->conect()->prepare($sql);
             $query = $prepare->execute([
-                'n1'   => $this->n1,
-                'n2' => $this->n2,
-                'operacion' => $this->operacion,
+                'n1'        => $datos['n1'],
+                'n2'        => $datos['n2'],
+                'operacion' => $datos['operacion'],
+                'resultado' => $resultado,
             ]);
-        } catch(PDOException $e){
+
+            if ($query) {
+                return true;
+            }
+        } catch (PDOException $e) {
             return $e->getMessage();
+            exit();
         }
-
-        
-        
-
-        return $resultado;
     }
 }
 
