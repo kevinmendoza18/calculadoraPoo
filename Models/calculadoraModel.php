@@ -53,9 +53,10 @@ class CalculadoraModel extends stdClass
         $items = [];
 
         try {
-
+            
             $sql = 'SELECT operaciones.id, operaciones.num_uno, operaciones.num_dos, operacion.nombre AS operacion, operaciones.resultado FROM operaciones JOIN operacion  ON operaciones.operacion = operacion.id';
             $query  = $this->db->conect()->query($sql);
+            
 
             while ($row = $query->fetch()) {
                 $item            = new CalculadoraModel();
@@ -74,9 +75,9 @@ class CalculadoraModel extends stdClass
         }
     }
 
+    
     public function store($datos)
     {
-
         try {
             $resultado = self::RealizarOperacion($datos);
 
@@ -96,6 +97,7 @@ class CalculadoraModel extends stdClass
         } catch (PDOException $e) {
             return $e->getMessage();
         }
+            
     }
 
     public function editar($datos)
@@ -163,21 +165,3 @@ class CalculadoraModel extends stdClass
     }
 }
 
-// $n1 = $_REQUEST['n1'];
-// $n2 = $_REQUEST['n2'];
-// $operacion = $_REQUEST['operacion'];
-
-// $calcular = new CalculadoraModel($n1, $n2, $operacion);
-// $calcular->n1 =  ['n1'];
-// $calcular->n2 =  ['n2'];
-// $calcular->operacion =  ['operacion'];
-
-// $calcular = new CalculadoraModel($n1, $n2, $operacion);
-// $resultado = $calcular->RealizarOperacion();
-
-
-// echo "el primer numnero es: " . $n1;
-// echo "<br>";
-// echo "el segundo numnero es: " . $n2;
-// echo "<br>";
-// echo "el resultado es: " . $resultado;

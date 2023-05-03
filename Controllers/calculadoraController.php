@@ -26,7 +26,7 @@ class calculadoraController
                 case 4:
                     self::editar();
                 default:
-                    # code...
+                    
                     break;
             }
         }
@@ -40,6 +40,7 @@ class calculadoraController
 
     public function store()
     {
+        
         // if (isset($_REQUEST)) {
         //     if (isset($_REQUEST['operacion']) && ($_REQUEST['operacion'] != 0) && isset($_REQUEST['num_uno']) && isset($_REQUEST['num_dos'])) {
 
@@ -65,6 +66,7 @@ class calculadoraController
 
     public function eliminar()
     {
+        
         $id = $_REQUEST['id'];
         $result = $this->calculadora->eliminar($id);
         if ($result) {
